@@ -2,7 +2,9 @@
 
 {% load i18n %}
 
-{% block extra_head %}{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}condottieri_messages/css/condottieri_messages.css" />
+{% endblock %}
 
 {% block head_title %}{% trans "Mail" %}{% endblock %}
 
