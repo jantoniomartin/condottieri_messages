@@ -1,0 +1,267 @@
+# CATALAN TRANSLATION OF MESSAGES FOR MACHIAVELLI APP IN CONDOTTIERI.
+# Copyright (C) Rafael Romero Mora
+# This file is distributed under the same license as the 'machiavelli' package.
+# FIRST AUTHOR <longrider186@yahoo.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-19 13:30+0100\n"
+"PO-Revision-Date: 2010-03-19 13:30+0100\n"
+"Last-Translator: Rafael Romero Mora <longrider186@yahoo.com>\n"
+"Language-Team: CA <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: management.py:9
+msgid "Letter Received"
+msgstr "Carta Rebuda"
+
+#: management.py:9
+msgid "you have received a letter"
+msgstr "has rebut una carta"
+
+#: models.py:35
+msgid "From country"
+msgstr "Del país"
+
+#: models.py:36
+msgid "To country"
+msgstr "Al país"
+
+#: views.py:45
+msgid "Eliminated players cannot send or receive letters"
+msgstr "Els jugadors eliminats no poden enviar ni rebre cartes"
+
+#: views.py:48
+msgid "You cannot send letters in an inactive game."
+msgstr "No pots enviar cartes en un joc inactiu"
+
+#: views.py:51
+msgid "You cannot write to a country that you have excommunicated."
+msgstr "No pots escriure a un país al qual has excomunicat."
+
+#: views.py:96
+msgid "The letter has been successfully sent."
+msgstr "La carta s'ha enviat correctament."
+
+#: views.py:100
+msgid "You have been excommunicated."
+msgstr "Has estat excomunicat."
+
+#: views.py:104
+#, python-format
+msgid ""
+"%(sender)s wrote:\n"
+"%(body)s"
+msgstr ""
+"%(sender)s va escriure:\n"
+"%(body)s"
+
+#: views.py:107
+#, python-format
+msgid "Re: %(subject)s"
+msgstr "Re: %(subject)s"
+
+#: views.py:117
+msgid "You can write letters only to other excommunicated countries."
+msgstr "Sols pots escriure cartes a altres països excomunicats."
+
+#: views.py:226
+msgid "Message successfully deleted."
+msgstr "Missatge esborrat correctament."
+
+#: views.py:253
+msgid "Message successfully recovered."
+msgstr "Missatge recuperat correctament."
+
+#: templates/condottieri_messages/base.html:7
+msgid "Mail"
+msgstr "Correu"
+
+#: templates/condottieri_messages/base.html:14
+#: templates/condottieri_messages/inbox.html:4
+msgid "Inbox"
+msgstr "Entrada"
+
+#: templates/condottieri_messages/base.html:15
+#: templates/condottieri_messages/outbox.html:4
+msgid "Sent Messages"
+msgstr "Missatges Enviats"
+
+#: templates/condottieri_messages/base.html:16
+msgid "Trash"
+msgstr "Paperera"
+
+#: templates/condottieri_messages/compose.html:6
+msgid "New letter"
+msgstr "Nova carta"
+
+#: templates/condottieri_messages/compose.html:7
+#, python-format
+msgid ""
+"\n"
+"New letter for %(country)s\n"
+msgstr ""
+"\n"
+"Nova carta per a %(country)s\n"
+
+#: templates/condottieri_messages/compose.html:11
+msgid ""
+"Notice: This player is currently excommunicated. If you send this letter, "
+"you will be also excommunicated."
+msgstr ""
+"Avís: Aquest jugador ha estat excomunicat. Si li envieu aquesta carta tu també "
+"estaràs excomunicat."
+
+#: templates/condottieri_messages/compose.html:15
+#, python-format
+msgid "Tip: Both you and %(country)s understand %(common_language)s."
+msgstr "Avís: tant %(country)s com tu enteneu %(common_language)s."
+
+#: templates/condottieri_messages/compose.html:19
+msgid ""
+"Tip: See the user profile to know which languages you both have in common."
+msgstr ""
+"Consell: mira el perfil de l'usuari per saber quins idiomes teniu en comú."
+
+#: templates/condottieri_messages/compose.html:20
+msgid "User profile"
+msgstr "Perfil d'usuari"
+
+#: templates/condottieri_messages/compose.html:29
+msgid "Send"
+msgstr "Enviar"
+
+#: templates/condottieri_messages/compose.html:32
+#: templates/condottieri_messages/view.html:21
+msgid "Return to game"
+msgstr "Tornar al joc"
+
+#: templates/condottieri_messages/inbox.html:13
+#: templates/condottieri_messages/outbox.html:13
+#: templates/condottieri_messages/trash.html:8
+msgid "Game"
+msgstr "Joc"
+
+#: templates/condottieri_messages/inbox.html:15
+#: templates/condottieri_messages/outbox.html:15
+#: templates/condottieri_messages/trash.html:8
+msgid "Year"
+msgstr "Any"
+
+#: templates/condottieri_messages/inbox.html:15
+#: templates/condottieri_messages/outbox.html:15
+#: templates/condottieri_messages/trash.html:8
+msgid "Season"
+msgstr "Estació"
+
+#: templates/condottieri_messages/inbox.html:15
+#: templates/condottieri_messages/trash.html:8
+#: templates/condottieri_messages/view.html:8
+msgid "Sender"
+msgstr "Remitent"
+
+#: templates/condottieri_messages/inbox.html:15
+#: templates/condottieri_messages/outbox.html:15
+#: templates/condottieri_messages/trash.html:8
+#: templates/condottieri_messages/view.html:6
+#: templates/notification/condottieri_messages_received/full.txt:7
+msgid "Subject"
+msgstr "Assumpte"
+
+#: templates/condottieri_messages/inbox.html:15
+msgid "Received"
+msgstr "Rebuda"
+
+#: templates/condottieri_messages/inbox.html:15
+#: templates/condottieri_messages/outbox.html:15
+#: templates/condottieri_messages/trash.html:8
+msgid "Action"
+msgstr "Acció"
+
+#: templates/condottieri_messages/inbox.html:32
+#: templates/condottieri_messages/outbox.html:29
+#: templates/condottieri_messages/trash.html:20
+#: templates/condottieri_messages/view.html:11
+msgid "DATETIME_FORMAT"
+msgstr ""
+
+#: templates/condottieri_messages/inbox.html:33
+#: templates/condottieri_messages/outbox.html:30
+msgid "delete"
+msgstr "esborrar"
+
+#: templates/condottieri_messages/inbox.html:39
+#: templates/condottieri_messages/outbox.html:36
+#: templates/condottieri_messages/trash.html:27
+msgid "No messages."
+msgstr "No hi ha missatges"
+
+#: templates/condottieri_messages/outbox.html:15
+#: templates/condottieri_messages/view.html:12
+msgid "Recipient"
+msgstr "Destinatari"
+
+#: templates/condottieri_messages/outbox.html:15
+msgid "Sent"
+msgstr "Enviada"
+
+#: templates/condottieri_messages/trash.html:4
+msgid "Deleted Messages"
+msgstr "Missatges Esborrats"
+
+#: templates/condottieri_messages/trash.html:8
+#: templates/condottieri_messages/view.html:10
+msgid "Date"
+msgstr "Data"
+
+#: templates/condottieri_messages/trash.html:21
+msgid "undelete"
+msgstr "recuperar"
+
+#: templates/condottieri_messages/trash.html:30
+msgid ""
+"Deleted Messages are removed from the trash at unregular intervals, don't "
+"rely on this feature for long-time storage."
+msgstr ""
+"Els Missatges esborrats s'eliminen de la paperera a intervals irregulars, "
+"no facis servir la paperera com arxiu."
+
+#: templates/condottieri_messages/view.html:4
+msgid "View Message"
+msgstr "Veure Missatge"
+
+#: templates/condottieri_messages/view.html:18
+msgid "Reply"
+msgstr "Respondre"
+
+#: templates/condottieri_messages/view.html:20
+msgid "Delete"
+msgstr "Esborrar"
+
+#: templates/notification/condottieri_messages_received/full.txt:3
+#, python-format
+msgid "You have received a new letter in the game '%(slug)s'"
+msgstr "Has rebut una nova carta en la partida '%(slug)s'"
+
+#: templates/notification/condottieri_messages_received/full.txt:5
+msgid "From"
+msgstr "De"
+
+#: templates/notification/condottieri_messages_received/full.txt:9
+msgid "Body"
+msgstr "Cos"
+
+#: templates/notification/condottieri_messages_received/full.txt:12
+msgid "Read the letter"
+msgstr "Llegir la carta"
+
+#: templates/notification/condottieri_messages_received/notice.html:3
+#, python-format
+msgid "New letter from %(country)s in '%(slug)s'"
+msgstr "Nova carta de %(country)s en '%(slug)s'"
