@@ -1,9 +1,10 @@
 {% extends "condottieri_messages/base.html" %} 
 {% load i18n %} 
 {% block content %}
-<h2>{% trans "Inbox" %}</h2>
 {% if game %}
-<h3>{{ game.slug }}</h3>
+<h2>{% blocktrans with game.slug as slug %}Inbox for game {{ slug }}{% endblocktrans %}</h2>
+{% else %}
+<h2>{% trans "Inbox" %}</h2>
 {% endif %}
 {% if message_list %} 
 <table class="messages">
