@@ -18,7 +18,7 @@
 
 import django.forms as forms
 
-from condottieri_messages.models import *
+import condottieri_messages.models as messages
 
 class LetterForm(forms.ModelForm):
 	def __init__(self, sender_player, recipient_player, **kwargs):
@@ -31,6 +31,6 @@ class LetterForm(forms.ModelForm):
 		self.instance.season = sender_player.game.season
 
 	class Meta:
-		model = Letter
+		model = messages.Letter
 		fields = ('subject', 'body',)
 

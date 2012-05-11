@@ -1,4 +1,4 @@
-from condottieri_messages.models import *
+from condottieri_messages.models import Letter
 from django.contrib import admin
 
 class LetterAdmin(admin.ModelAdmin):
