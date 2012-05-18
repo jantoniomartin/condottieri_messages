@@ -13,7 +13,7 @@
 		<td><a href="{% url show-game message.letter.sender_player.game.slug %}">{{ message.letter.sender_player.game.slug }}</a></td>
         <td>{{ message.letter.year }}</td>
 		<td>{{ message.letter.get_season_display }}</td>
-        <td>{{ message.letter.sender_player.country }}</td>
+        <td>{{ message.letter.sender_player.contender.country }}</td>
         <td> 
         {{ message.subject }}
         </td>

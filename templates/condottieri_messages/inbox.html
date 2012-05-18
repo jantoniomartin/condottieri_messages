@@ -23,7 +23,7 @@
 		{% endif %}
         <td>{{ message.letter.year }}</td>
 		<td>{{ message.letter.get_season_display }}</td>
-		<td>{{ message.letter.sender_player.country }}</td>
+		<td>{{ message.letter.sender_player.contender.country }}</td>
         <td>
             {% if message.new %}<strong>{% endif %}
             {% if message.replied %}<em>{% endif %}

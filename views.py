@@ -102,7 +102,7 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 	else:
 		if parent:
 			initial = {'body': _(u"%(sender)s wrote:\n%(body)s") % {
-					'sender': parent.sender_player.country, 
+					'sender': parent.sender_player.contender.country, 
 					'body': format_quote(parent.body)}, 
 					'subject': _(u"Re: %(subject)s") % {'subject': parent.subject},
 					}

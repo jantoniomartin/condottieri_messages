@@ -2,7 +2,7 @@
 
 {% blocktrans with game.slug as slug %}You have received a new letter in the game '{{ slug }}'{% endblocktrans %}
 
-{% trans "From" %}: {{ letter.sender_player.country }}
+{% trans "From" %}: {{ letter.sender_player.contender.country }}
 
 {% trans "Subject" %}: {{ letter.subject }}
 

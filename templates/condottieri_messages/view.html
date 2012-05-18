@@ -6,11 +6,11 @@
     <dt>{% trans "Subject" %}</dt>
     <dd><strong>{{ message.subject }}</strong></dd>
     <dt>{% trans "Sender" %}</dt>
-    <dd>{{ message.letter.sender_player.country }}</dd>
+    <dd>{{ message.letter.sender_player.contender.country }}</dd>
     <dt>{% trans "Date" %} </dt>
     <dd>{{ message.letter.get_season_display }}, {{ message.letter.year }} ({{ message.sent_at|date:_("DATETIME_FORMAT")}})</dd>
     <dt>{% trans "Recipient" %}</dt>
-    <dd>{{ message.letter.recipient_player.country }}</dd>
+    <dd>{{ message.letter.recipient_player.contender.country }}</dd>
 </dl>
 {{ message.body|linebreaksbr }}<br /><br />
 

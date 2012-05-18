@@ -4,7 +4,7 @@
 
 {% block actions %}
 <h2>{% trans "New letter" %}</h2>
-<p>{% blocktrans with recipient_player.country as country %}
+<p>{% blocktrans with recipient_player.contender.country as country %}
 New letter for {{ country }}
 {% endblocktrans %}</p>
 {% if excom_notice %}
@@ -12,7 +12,7 @@ New letter for {{ country }}
 {% endif %}
 
 {% if common_language %}
-<p>{% blocktrans with recipient_player.country as country %}Tip: Both you and {{ country }} understand {{ common_language }}.{% endblocktrans %}</p>
+<p>{% blocktrans with recipient_player.contender.country as country %}Tip: Both you and {{ country }} understand {{ common_language }}.{% endblocktrans %}</p>
 {% endif %}
 
 {% if show_users %}

@@ -23,7 +23,7 @@
 		{% endif %}
         <td>{{ message.letter.year }}</td>
 		<td>{{ message.letter.get_season_display }}</td>
-        <td>{{ message.letter.recipient_player.country }}</td>
+        <td>{{ message.letter.recipient_player.contender.country }}</td>
         <td>
         <a href="{{ message.letter.get_absolute_url }}">{{ message.subject }}</a>
         </td>
