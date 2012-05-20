@@ -70,6 +70,8 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 		game = sender_player.game
 	else:
 		raise Http404
+	if game.is_team_game:
+		raise Http404
 	context = base_context(request, game, sender_player)
 	try:
 		check_errors(request, game, sender_player, recipient_player)
