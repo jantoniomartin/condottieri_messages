@@ -1,0 +1,94 @@
+{% extends "condottieri_messages/base.html" %} 
+{% load i18n %} 
+{% block content %}
+{% if game %}
+	<h2>
+	{% if box == "inbox" %}
+	{% blocktrans with game.slug as slug %}Inbox for game {{ slug }}{% endblocktrans %}
+	{% endif %}
+	{% if box == "outbox" %}
+	{% blocktrans with game.slug as slug %}Outbox for game {{ slug }}{% endblocktrans %}
+	{% endif %}
+	</h2>
+{% else %}
+	<h2>
+	{% if box == "inbox" %}{% trans "Inbox" %}{% endif %}
+	{% if box == "outbox" %}{% trans "Outbox" %}{% endif %}
+	{% if box == "trash" %}{% trans "Trash" %}{% endif %}
+	</h2>
+{% endif %}
+{% if message_list %} 
+<table class="messages">
+    <thead>
+        <tr>
+		{% if not game %}
+		<th>{% trans "Game" %}</th>
+		{% endif %}
+		<th>{% trans "Year" %}</th>
+		<th>{% trans "Season" %}</th>
+		<th>
+			{% if box == "inbox" or box == "trash" %}
+				{% trans "Sender" %}
+			{% else %}
+				{% trans "Recipient" %}
+			{% endif %}
+		</th>
+		<th>{% trans "Subject" %}</th>
+		<th>{% trans "Date" %}</th>
+		<th>{% trans "Action" %}</th></tr>
+    </thead>
+    <tbody>
+{% for message in message_list %} 
+    <tr>
+		{% if not game %}
+		<td><a href="{% url show-game message.letter.sender_player.game.slug %}">{{ message.letter.sender_player.game.slug }}</a></td>
+		{% endif %}
+        <td>{{ message.letter.year }}</td>
+		<td>{{ message.letter.get_season_display }}</td>
+		<td>
+			{% if box == "inbox" or box == "trash" %}
+				{{ message.letter.sender_player.contender.country }}
+			{% else %}
+        		{{ message.letter.recipient_player.contender.country }}
+			{% endif %}
+		</td>
+        <td {% if message.new and box == "inbox" %}class="unread"{% endif %}>
+			<a href="{{message.letter.get_absolute_url }}">{{ message.subject }}</a>
+        </td>
+		<td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
+        <td>
+			{% if box == "trash" %}
+        		<a href="{% url messages_undelete message.id %}">{% trans "undelete" %}</a>
+			{% else %}
+				<a href="{% url messages_delete message.id %}">{% trans "delete" %}</a>
+			{% endif %}
+		</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination">
+	<span class="step-links">
+		{% if page_obj.has_previous %}
+			<a href="?page={{ page_obj.previous_page_number }}">&lt;&lt;</a>
+		{% endif %}
+		
+		<span class="current">
+			{% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}.
+		</span>
+
+		{% if page_obj.has_next %}
+			<a href="?page={{ page_obj.next_page_number }}">&gt;&gt;</a>
+		{% endif %}
+	</span>
+</div>
+
+{% if box == "trash" %}
+<p>{% trans "Deleted Messages are removed from the trash at unregular intervals, don't rely on this feature for long-time storage." %}</p>
+{% endif %}
+
+{% else %}
+<p>{% trans "No messages." %}</p>
+{% endif %}  
+{% endblock %}

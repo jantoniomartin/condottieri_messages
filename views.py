@@ -23,8 +23,11 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import Http404, HttpResponseRedirect
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 from django.conf import global_settings
+
+from django.views.generic.list import ListView
 
 from messages.utils import format_quote
 from messages.models import Message
@@ -38,6 +41,14 @@ from condottieri_messages.exceptions import LetterError
 
 import condottieri_messages.forms as forms
 from condottieri_messages.models import Letter
+
+class LoginRequiredMixin(object):
+	""" Mixin to check that the user has authenticated.
+	(Always the first mixin in class)
+	"""
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 def check_errors(request, game, sender_player, recipient_player):
 	msg = None
@@ -155,41 +166,40 @@ def view(request, message_id):
 							context,
 							context_instance=RequestContext(request))
 
-@login_required
-def inbox(request, slug=None):
-	"""
-	Displays a list of received messages for the current user.
-	Optional Arguments:
-	``slug``: show only messages of the game with this name.
-	"""
-	context = {}
-	message_list = Message.objects.inbox_for(request.user)
-	if slug:
-		game = get_object_or_404(Game, slug=slug)
-		message_list = message_list.filter(letter__sender_player__game=game)
-		context['game'] = game
-	context['message_list'] = message_list
-	return render_to_response('condottieri_messages/inbox.html',
-   	    					context,
-							context_instance=RequestContext(request))
+class BoxListView(LoginRequiredMixin, ListView):
+	allow_empty = True
+	model = Message
+	paginate_by = 10
+	context_object_name = 'message_list'
+	template_name = 'condottieri_messages/messages_box.html'
+	box = None
 
-@login_required
-def outbox(request, slug=None):
-	"""
-	Displays a list of sent messages by the current user.
-	Optional arguments:
-	``slug``: show only messages of the game with this name.
-	"""
-	context = {}
-	message_list = Message.objects.outbox_for(request.user)
-	if slug:
-		game = get_object_or_404(Game, slug=slug)
-		message_list = message_list.filter(letter__sender_player__game=game)
-		context['game'] = game
-	context['message_list'] = message_list
-	return render_to_response('condottieri_messages/outbox.html',
-   	    					context,
-							context_instance=RequestContext(request))
+	allowed_boxes = ['inbox', 'outbox', 'trash']
+
+	def get_queryset(self):
+		if not self.box in self.allowed_boxes:
+			return Message.objects.none()
+		if self.box == 'inbox':
+			message_list = Message.objects.inbox_for(self.request.user)
+		elif self.box == 'outbox':
+			message_list = Message.objects.outbox_for(self.request.user)
+		elif self.box == 'trash':
+			message_list = Message.objects.trash_for(self.request.user)
+		try:
+			slug = self.kwargs['slug']
+		except KeyError:
+			pass
+		else:
+			self.game = get_object_or_404(Game, slug=slug)
+			message_list = message_list.filter(letter__sender_player__game=self.game)
+		return message_list
+
+	def get_context_data(self, **kwargs):
+		context = super(BoxListView, self).get_context_data(**kwargs)
+		if hasattr(self, 'game'):
+			context['game'] = self.game
+		context['box'] = self.box
+		return context
 
 ##
 ## 'delete' and 'undelete' code is taken from django-messages and modified

@@ -5,15 +5,11 @@ from django.views.generic.simple import redirect_to #direct_to_template
 #from django.views.decorators.cache import cache_page
 
 import messages.views as views
+from condottieri_messages.views import BoxListView
 
 ## urls that call the views in messages
 urlpatterns = patterns('messages.views',
     url(r'^$', redirect_to, {'url': 'inbox/'}),
-	url(r'^inbox/$', views.inbox, {'template_name': 'condottieri_messages/inbox.html',}, name='messages_inbox'),
-    url(r'^outbox/$', views.outbox, {'template_name': 'condottieri_messages/outbox.html',}, name='messages_outbox'),
-    #url(r'^delete/(?P<message_id>[\d]+)/$', 'delete', name='messages_delete'),
-    #url(r'^undelete/(?P<message_id>[\d]+)/$', 'undelete', name='messages_undelete'),
-    url(r'^trash/$', views.trash, {'template_name': 'condottieri_messages/trash.html',}, name='messages_trash'),
 )
 
 ## urls that call the custom views in condottieri_messages
@@ -21,8 +17,11 @@ urlpatterns += patterns('condottieri_messages.views',
 	url(r'^compose/(?P<sender_id>[\d]+)/(?P<recipient_id>[\d]+)/$', 'compose', name='condottieri_messages_compose'),
     url(r'^reply/(?P<letter_id>[\d]+)/$', 'compose', name='condottieri_messages_reply'),
     url(r'^view/(?P<message_id>[\d]+)/$', 'view', name='condottieri_messages_detail'),
-	url(r'^inbox/(?P<slug>[-\w]+)/$', 'inbox', name='condottieri_messages_inbox'),
-	url(r'^outbox/(?P<slug>[-\w]+)/$', 'outbox', name='condottieri_messages_outbox'),
+	url(r'^inbox/$', BoxListView.as_view(box='inbox'), name='messages_inbox'),
+	url(r'^outbox/$', BoxListView.as_view(box='outbox'), name='messages_outbox'),
+	url(r'^trash/$', BoxListView.as_view(box='trash'), name='messages_trash'),
+	url(r'^inbox/(?P<slug>[-\w]+)/$', BoxListView.as_view(box='inbox') , name='condottieri_messages_inbox'),
+	url(r'^outbox/(?P<slug>[-\w]+)/$', BoxListView.as_view(box='outbox') , name='condottieri_messages_outbox'),
     url(r'^delete/(?P<message_id>[\d]+)/$', 'delete', name='messages_delete'),
     url(r'^undelete/(?P<message_id>[\d]+)/$', 'undelete', name='messages_undelete'),
 )
