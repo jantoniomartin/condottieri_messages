@@ -169,7 +169,7 @@ def view(request, message_id):
 class BoxListView(LoginRequiredMixin, ListView):
 	allow_empty = True
 	model = Message
-	paginate_by = 10
+	paginate_by = 25
 	context_object_name = 'message_list'
 	template_name = 'condottieri_messages/messages_box.html'
 	box = None
