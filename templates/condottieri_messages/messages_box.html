@@ -52,8 +52,8 @@
         		{{ message.letter.recipient_player.contender.country }}
 			{% endif %}
 		</td>
-        <td {% if message.new and box == "inbox" %}class="unread"{% endif %}>
-			<a href="{{message.letter.get_absolute_url }}">{{ message.subject }}</a>
+        <td>
+			<span {% if message.new and box == "inbox" %}class="unread"{% endif %}><a href="{{message.letter.get_absolute_url }}">{{ message.subject }}</a></span>
         </td>
 		<td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
         <td>
