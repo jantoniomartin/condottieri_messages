@@ -1,6 +1,7 @@
 {% extends 'machiavelli/show_game.html' %}
 
 {% load i18n %}
+{% load uni_form_tags %}
 
 {% block actions %}
 <h2>{% trans "New letter" %}</h2>
@@ -21,11 +22,9 @@ New letter for {{ country }}
 {% endif %}
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<form action="{% url condottieri_messages_compose sender_player.id recipient_player.id %}" method="post">
+<form action="{% url condottieri_messages_compose sender_player.id recipient_player.id %}" method="post" class="uniForm">
 {% csrf_token %}
-<table>
-{{ form }}
-</table>
+{{ form|as_uni_form }}
 <p><input type="submit" value="{% trans "Send" %}" />
 </form>
 

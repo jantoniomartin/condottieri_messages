@@ -17,20 +17,41 @@
 ## AUTHOR: Jose Antonio Martin <jantonio.martin AT gmail DOT com>
 
 import django.forms as forms
+from django.utils.translation import ugettext_lazy as _
 
 import condottieri_messages.models as messages
 
-class LetterForm(forms.ModelForm):
-	def __init__(self, sender_player, recipient_player, **kwargs):
-		super(LetterForm, self).__init__(**kwargs)
-		self.instance.sender_player = sender_player
-		self.instance.recipient_player = recipient_player
-		self.instance.sender = sender_player.user
-		self.instance.recipient = recipient_player.user
-		self.instance.year = sender_player.game.year
-		self.instance.season = sender_player.game.season
+class PlayerMultipleChoiceField(forms.ModelMultipleChoiceField):
+	def label_from_instance(self, obj):
+		try:
+			label = obj.contender.country.name
+		except:
+			return super(PlayerMultipleChoiceField, self).label_from_instance(obj)
+		else:
+			if obj.is_excommunicated:
+				label = ' '.join([label, unicode(_("(excommunicated)"))])
+			return label
 
-	class Meta:
-		model = messages.Letter
-		fields = ('subject', 'body',)
+def letter_form_factory(sender_player, recipient_player):
+	game = sender_player.game
+	bcc_qs = game.player_set.exclude(user__isnull=True).exclude(id=sender_player.id).exclude(id=recipient_player.id)
+	if sender_player.is_excommunicated:
+		bcc_qs = bcc_qs.filter(is_excommunicated=True)
+	else:
+		if sender_player.may_excommunicate:
+			bcc_qs = bcc_qs.exclude(is_excommunicated=True)
+	
+	class LetterForm(forms.ModelForm):
+		bcc = PlayerMultipleChoiceField(queryset=bcc_qs, required=False,
+			label=_("Additional recipients (Bcc)"))
+		
+		def __init__(self, sender_player, recipient_player, **kwargs):
+			super(LetterForm, self).__init__(**kwargs)
+			self.instance.sender_player = sender_player
+			self.instance.recipient_player = recipient_player
 
+		class Meta:
+			model = messages.Letter
+			fields = ('bcc', 'subject', 'body',)
+
+	return LetterForm

@@ -37,6 +37,14 @@ class Letter(messages.Message):
 	year = models.PositiveIntegerField(default=0)
 	season = models.PositiveIntegerField(default=1, choices=SEASONS)
     
+	def save(self, *args, **kwargs):
+		if not self.id:
+			self.sender = self.sender_player.user
+			self.recipient = self.recipient_player.user
+			self.year = self.sender_player.game.year
+			self.season = self.sender_player.game.season
+		super(Letter, self).save(*args, **kwargs)
+	
 	def get_absolute_url(self):
 		return ('condottieri_messages_detail', [self.id])
 	get_absolute_url = models.permalink(get_absolute_url)

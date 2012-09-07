@@ -102,28 +102,50 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 		if common_language_code in lang_dict.keys():
 			common_language = lang_dict[common_language_code]
 		context.update({'common_language': common_language })
+	LetterForm = forms.letter_form_factory(sender_player, recipient_player)
 	if request.method == 'POST':
-		letter_form = forms.LetterForm(sender_player, recipient_player, data=request.POST)
+		letter_form = LetterForm(sender_player, recipient_player, data=request.POST)
 		if letter_form.is_valid():
-			letter = letter_form.save()
-			messages.success(request, _("The letter has been successfully sent."))
-			## check if sender must be excommunicated
-			if not sender_player.is_excommunicated and recipient_player.is_excommunicated:
-				sender_player.set_excommunication(by_pope=False)
-				messages.info(request, _("You have been excommunicated."))
-			return redirect(game)
+			bcc_errors = False
+			bcc = letter_form.cleaned_data["bcc"]
+			excom = False
+			for r in bcc:
+				try:
+					check_errors(request, game, sender_player, r)
+				except LetterError, e:
+					bcc_errors = True
+					messages.error(request, e.value)
+			if not bcc_errors:
+				letter = letter_form.save()
+				for r in bcc:
+					letter_copy = Letter(sender_player=letter.sender_player,
+						recipient_player=r,
+						subject=letter.subject,
+						body=letter.body)
+					letter_copy.save()
+					if not sender_player.is_excommunicated and \
+						r.is_excommunicated:
+						excom = True
+
+				messages.success(request, _("The letter has been successfully sent."))
+				## check if sender must be excommunicated
+				if not sender_player.is_excommunicated and \
+					recipient_player.is_excommunicated:
+					excom = True
+				if excom:
+					sender_player.set_excommunication(by_pope=False)
+					messages.info(request, _("You have been excommunicated."))
+				return redirect(game)
 	else:
 		if parent:
-			initial = {'body': _(u"%(sender)s wrote:\n%(body)s") % {
-					'sender': parent.sender_player.contender.country, 
-					'body': format_quote(parent.body)}, 
+			initial = {'body': unicode(format_quote(parent.body)),
 					'subject': _(u"Re: %(subject)s") % {'subject': parent.subject},
 					}
 		else:
 			initial = {}
-		letter_form = forms.LetterForm(sender_player,
-									recipient_player,
-									initial=initial)
+		letter_form = LetterForm(sender_player,
+								recipient_player,
+								initial=initial)
 		if not sender_player.is_excommunicated and recipient_player.is_excommunicated:
 			context['excom_notice'] = True
 		if sender_player.is_excommunicated and not recipient_player.is_excommunicated:
