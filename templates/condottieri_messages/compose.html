@@ -3,14 +3,15 @@
 {% load i18n %}
 {% load uni_form_tags %}
 
+{% block extra_extra_head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}condottieri_messages/css/condottieri_messages.css" />
+{% endblock %}
+
 {% block actions %}
 <h2>{% trans "New letter" %}</h2>
 <p>{% blocktrans with recipient_player.contender.country as country %}
 New letter for {{ country }}
 {% endblocktrans %}</p>
-{% if excom_notice %}
-<p>{% blocktrans %}Notice: This player is currently excommunicated. If you send this letter, you will be also excommunicated.{% endblocktrans %}
-{% endif %}
 
 {% if common_language %}
 <p>{% blocktrans with recipient_player.contender.country as country %}Tip: Both you and {{ country }} understand {{ common_language }}.{% endblocktrans %}</p>
@@ -21,11 +22,20 @@ New letter for {{ country }}
 <a href="{% url profile_detail username=recipient_player.user.username %}">{% trans "User profile" %}</a></p>
 {% endif %}
 
+{% if excom_notice %}
+<p class="excom_notice">{% blocktrans %}Notice: This player is currently excommunicated. If you send this letter, you will be also excommunicated.{% endblocktrans %}</p>
+{% endif %}
+
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <form action="{% url condottieri_messages_compose sender_player.id recipient_player.id %}" method="post" class="uniForm">
 {% csrf_token %}
 {{ form|as_uni_form }}
-<p><input type="submit" value="{% trans "Send" %}" />
+
+{% if excom_notice %}
+<p><input type="submit" value="{% trans "Send and be excommunicated" %}" /></p>
+{% else %}
+<p><input type="submit" value="{% trans "Send" %}" /></p>
+{% endif %}
 </form>
 
 <p><a href="{% url show-game game.slug %}">{% trans "Return to game" %}</a></p>

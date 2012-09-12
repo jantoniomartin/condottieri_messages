@@ -5,3 +5,12 @@
 .unread {
 	font-weight: bold;
 }
+
+.excom_notice {
+	background: #ffdfdf;
+	border: 1px solid #df7d7d;
+	border-width: 1px 0;
+	margin: 0 0 1.5em 0;
+	padding: 7px;
+	color: #000000;
+}
