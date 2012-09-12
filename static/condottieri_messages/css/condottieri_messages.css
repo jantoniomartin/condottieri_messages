@@ -14,3 +14,24 @@
 	padding: 7px;
 	color: #000000;
 }
+
+#letter {
+	margin: 1em;
+	padding: 1em;
+	border-left: solid 1px #000;
+	background: url('../img/letter-paper.png');
+	color: #582c0c;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+#letter h2 {
+	margin-top: 0em;
+	font-size: large;
+}
+
+#letter_body p {
+	margin-top: 1em;
+	margin-left: 0.5em;
+	text-indent: 2em;
+	font-size: 120%;
+}

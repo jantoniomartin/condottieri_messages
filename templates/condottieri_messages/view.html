@@ -1,23 +1,28 @@
 {% extends "machiavelli/show_game.html" %} 
 {% load i18n %} 
-{% block actions %}
-<h1>{% trans "View Message" %}</h1>
-<dl class="message-headers">
-    <dt>{% trans "Subject" %}</dt>
-    <dd><strong>{{ message.subject }}</strong></dd>
-    <dt>{% trans "Sender" %}</dt>
-    <dd>{{ message.letter.sender_player.contender.country }}</dd>
-    <dt>{% trans "Date" %} </dt>
-    <dd>{{ message.letter.get_season_display }}, {{ message.letter.year }} ({{ message.sent_at|date:_("DATETIME_FORMAT")}})</dd>
-    <dt>{% trans "Recipient" %}</dt>
-    <dd>{{ message.letter.recipient_player.contender.country }}</dd>
-</dl>
-{{ message.body|linebreaksbr }}<br /><br />
 
+{% block extra_extra_head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}condottieri_messages/css/condottieri_messages.css" />
+{% endblock %}
+
+{% block actions %}
+<div id="letter">
+<h2>{{ message.subject }}</h2>
+<div id="letter_sender">{% trans "From" %} {{ message.letter.sender_player.contender.country }}</div>
+<div id="letter_recipient">{% trans "To" %} {{ message.letter.recipient_player.contender.country }}</div>
+<div id="letter_date">{{ message.letter.get_season_display }}, {{ message.letter.year }} ({{ message.sent_at|date:_("DATETIME_FORMAT")}})</div>
+
+<div id="letter_body">{{ message.body|linebreaks }}</div>
+
+
+</div>
+
+<p>
 {% ifequal message.recipient.pk user.pk %}
 <a href="{% url condottieri_messages_reply message.letter.id %}">{% trans "Reply" %}</a> |
 {% endifequal %}
 <a href="{% url messages_delete message.id %}?next={{ game.get_absolute_url }}">{% trans "Delete" %}</a> |
 <a href="{% url show-game game.slug %}">{% trans "Return to game" %}</a>
+</p>
 
 {% endblock %}
