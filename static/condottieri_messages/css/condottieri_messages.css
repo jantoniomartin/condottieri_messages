@@ -1,9 +1,22 @@
+#mail {
+	margin: 1em;
+}
+
+#mail table {
+	width: 90%;
+	table-layout: auto;
+}
+
 .unread:before {
 	content: "\00BB \0020";
 }
 
 .unread {
 	font-weight: bold;
+}
+
+.unread a, .unread a:visited {
+	color: #c74223; 
 }
 
 .excom_notice {
@@ -20,7 +33,6 @@
 	padding: 1em;
 	border-left: solid 1px #000;
 	background: url('../img/letter-paper.png');
-	color: #582c0c;
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
@@ -34,4 +46,5 @@
 	margin-left: 0.5em;
 	text-indent: 2em;
 	font-size: 120%;
+	color: #582c0c;
 }
