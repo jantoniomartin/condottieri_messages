@@ -35,7 +35,7 @@ from messages.models import Message
 from django.contrib import messages
 
 from machiavelli.models import Player, Game
-from machiavelli.views import base_context
+from machiavelli.views import get_game_context
 
 from condottieri_messages.exceptions import LetterError
 
@@ -83,7 +83,7 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 		raise Http404
 	if not game.configuration.letters:
 		raise Http404
-	context = base_context(request, game, sender_player)
+	context = get_game_context(request, game, sender_player)
 	try:
 		check_errors(request, game, sender_player, recipient_player)
 	except LetterError, e:
@@ -179,7 +179,7 @@ def view(request, message_id):
 		raise Http404
 	game = message.sender_player.game
 	player = Player.objects.get(user=request.user, game=game)
-	context = base_context(request, game, player)
+	context = get_game_context(request, game, player)
 	if message.read_at is None and message.recipient == user:
 		message.read_at = now
 		message.save()
