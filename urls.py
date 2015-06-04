@@ -1,15 +1,12 @@
-from django.conf.urls.defaults import *
-#from django.views.generic import list_detail
-#from django.views.generic.create_update import create_object
-from django.views.generic.simple import redirect_to #direct_to_template
-#from django.views.decorators.cache import cache_page
+from django.conf.urls import *
+from django.views.generic.base import RedirectView
 
 import messages.views as views
 from condottieri_messages.views import BoxListView
 
 ## urls that call the views in messages
 urlpatterns = patterns('messages.views',
-    url(r'^$', redirect_to, {'url': 'inbox/'}),
+    url(r'^$', RedirectView.as_view(url='inbox/')),
 )
 
 ## urls that call the custom views in condottieri_messages

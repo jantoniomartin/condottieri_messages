@@ -91,8 +91,8 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 		return redirect(game)
 	## try to find a common language for the two players
 	common_language_code = None
-	sender_lang = sender_player.user.get_profile().spokenlanguage_set.values_list('code', flat=True)
-	recipient_lang = recipient_player.user.get_profile().spokenlanguage_set.values_list('code', flat=True)
+	sender_lang = sender_player.user.profile.spokenlanguage_set.values_list('code', flat=True)
+	recipient_lang = recipient_player.user.profile.spokenlanguage_set.values_list('code', flat=True)
 	for lang in sender_lang:
 		if lang in recipient_lang:
 			common_language_code = lang
