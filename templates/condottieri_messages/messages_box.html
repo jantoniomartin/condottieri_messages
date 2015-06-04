@@ -41,7 +41,7 @@
 {% for message in message_list %} 
     <tr>
 		{% if not game %}
-		<td><a href="{% url show-game message.letter.sender_player.game.slug %}">{{ message.letter.sender_player.game.slug }}</a></td>
+		<td><a href="{% url "show-game" message.letter.sender_player.game.slug %}">{{ message.letter.sender_player.game.slug }}</a></td>
 		{% endif %}
         <td>{{ message.letter.year }}</td>
 		<td>{{ message.letter.get_season_display }}</td>
@@ -58,9 +58,9 @@
 		<td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
         <td>
 			{% if box == "trash" %}
-        		<a href="{% url messages_undelete message.id %}">{% trans "undelete" %}</a>
+        		<a href="{% url "messages_undelete" message.id %}">{% trans "undelete" %}</a>
 			{% else %}
-				<a href="{% url messages_delete message.id %}">{% trans "delete" %}</a>
+				<a href="{% url "messages_delete" message.id %}">{% trans "delete" %}</a>
 			{% endif %}
 		</td>
     </tr>

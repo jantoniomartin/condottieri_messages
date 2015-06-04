@@ -19,7 +19,7 @@ New letter for {{ country }}
 
 {% if show_users %}
 <p>{% blocktrans %}Tip: See the user profile to know which languages you both have in common.{% endblocktrans %}
-<a href="{% url profile_detail username=recipient_player.user.username %}">{% trans "User profile" %}</a></p>
+<a href="{% url "profile_detail" username=recipient_player.user.username %}">{% trans "User profile" %}</a></p>
 {% endif %}
 
 {% if excom_notice %}
@@ -27,7 +27,7 @@ New letter for {{ country }}
 {% endif %}
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<form action="{% url condottieri_messages_compose sender_player.id recipient_player.id %}" method="post" class="uniForm">
+<form action="{% url "condottieri_messages_compose" sender_player.id recipient_player.id %}" method="post" class="uniForm">
 {% csrf_token %}
 {{ form|as_uni_form }}
 
@@ -38,5 +38,5 @@ New letter for {{ country }}
 {% endif %}
 </form>
 
-<p><a href="{% url show-game game.slug %}">{% trans "Return to game" %}</a></p>
+<p><a href="{% url "show-game" game.slug %}">{% trans "Return to game" %}</a></p>
 {% endblock %}
