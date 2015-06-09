@@ -22,15 +22,15 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import Http404, HttpResponseRedirect
 from django.template import RequestContext
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 from django.conf import global_settings
 
 from django.views.generic.list import ListView
 
-from messages.utils import format_quote
-from messages.models import Message
+from django_messages.utils import format_quote
+from django_messages.models import Message
 
 from django.contrib import messages
 

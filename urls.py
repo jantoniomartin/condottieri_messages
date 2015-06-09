@@ -1,7 +1,7 @@
 from django.conf.urls import *
 from django.views.generic.base import RedirectView
 
-import messages.views as views
+import condottieri_messages.views as views
 from condottieri_messages.views import BoxListView
 
 ## urls that call the views in messages

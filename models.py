@@ -20,7 +20,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from messages import models as messages
+from django_messages import models as messages
 from machiavelli.models import Player, Revolution, SEASONS
 from machiavelli.signals import government_overthrown
 
