@@ -138,7 +138,7 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 				return redirect(game)
 	else:
 		if parent:
-			initial = {'body': unicode(format_quote(parent.body)),
+			initial = {'body': unicode(format_quote(recipient_player.contender, parent.body)),
 					'subject': _(u"Re: %(subject)s") % {'subject': parent.subject},
 					}
 		else:
