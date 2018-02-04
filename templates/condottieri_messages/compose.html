@@ -1,7 +1,7 @@
 {% extends 'machiavelli/show_game.html' %}
 
 {% load i18n %}
-{% load uni_form_tags %}
+{% load crispy_forms_tags %}
 
 {% block extra_extra_head %}
 <link rel="stylesheet" href="{{ STATIC_URL }}condottieri_messages/css/condottieri_messages.css" />
@@ -29,7 +29,7 @@ New letter for {{ country }}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <form action="{% url "condottieri_messages_compose" sender_player.id recipient_player.id %}" method="post" class="uniForm">
 {% csrf_token %}
-{{ form|as_uni_form }}
+{{ form|crispy }}
 
 {% if excom_notice %}
 <p><input type="submit" value="{% trans "Send and be excommunicated" %}" /></p>
