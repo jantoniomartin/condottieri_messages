@@ -24,8 +24,8 @@ from django_messages import models as messages
 from machiavelli.models import Player, Revolution, SEASONS
 from machiavelli.signals import government_overthrown
 
-if "notification" in settings.INSTALLED_APPS:
-        from notification import models as notification
+if "pinax.notifications" in settings.INSTALLED_APPS:
+        from pinax.notifications import models as notification
 else:
         notification = None
 

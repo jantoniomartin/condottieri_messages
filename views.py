@@ -258,8 +258,6 @@ def delete(request, message_id, success_url=None):
     if deleted:
         message.save()
         messages.success(request, _(u"Message successfully deleted."))
-        #if notification:
-        #    notification.send([user], "messages_deleted", {'message': message,})
         return HttpResponseRedirect(success_url)
     raise Http404
 
@@ -285,8 +283,6 @@ def undelete(request, message_id, success_url=None):
     if undeleted:
         message.save()
         messages.success(request, _(u"Message successfully recovered."))
-        #if notification:
-        #    notification.send([user], "messages_recovered", {'message': message,})
         return HttpResponseRedirect(success_url)
     raise Http404
 
