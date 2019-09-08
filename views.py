@@ -86,7 +86,7 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 	context = get_game_context(request, game, sender_player)
 	try:
 		check_errors(request, game, sender_player, recipient_player)
-	except LetterError, e:
+	except LetterError as e:
 		messages.error(request, e.value)
 		return redirect(game)
 	## try to find a common language for the two players
@@ -99,7 +99,7 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 			break
 	if common_language_code is not None:
 		lang_dict = dict(global_settings.LANGUAGES)
-		if common_language_code in lang_dict.keys():
+		if common_language_code in list(lang_dict.keys()):
 			common_language = lang_dict[common_language_code]
 		context.update({'common_language': common_language })
 	LetterForm = forms.letter_form_factory(sender_player, recipient_player)
@@ -112,7 +112,7 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 			for r in bcc:
 				try:
 					check_errors(request, game, sender_player, r)
-				except LetterError, e:
+				except LetterError as e:
 					bcc_errors = True
 					messages.error(request, e.value)
 			if not bcc_errors:
@@ -138,8 +138,8 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 				return redirect(game)
 	else:
 		if parent:
-			initial = {'body': unicode(format_quote(recipient_player.contender, parent.body)),
-					'subject': _(u"Re: %(subject)s") % {'subject': parent.subject},
+			initial = {'body': str(format_quote(recipient_player.contender, parent.body)),
+					'subject': _("Re: %(subject)s") % {'subject': parent.subject},
 					}
 		else:
 			initial = {}
@@ -247,7 +247,7 @@ def delete(request, message_id, success_url=None):
     deleted = False
     if success_url is None:
         success_url = reverse('messages_inbox')
-    if request.GET.has_key('next'):
+    if 'next' in request.GET:
         success_url = request.GET['next']
     if message.sender == user:
         message.sender_deleted_at = now
@@ -257,7 +257,7 @@ def delete(request, message_id, success_url=None):
         deleted = True
     if deleted:
         message.save()
-        messages.success(request, _(u"Message successfully deleted."))
+        messages.success(request, _("Message successfully deleted."))
         return HttpResponseRedirect(success_url)
     raise Http404
 
@@ -272,7 +272,7 @@ def undelete(request, message_id, success_url=None):
     undeleted = False
     if success_url is None:
         success_url = reverse('messages_inbox')
-    if request.GET.has_key('next'):
+    if 'next' in request.GET:
         success_url = request.GET['next']
     if message.sender == user:
         message.sender_deleted_at = None
@@ -282,7 +282,7 @@ def undelete(request, message_id, success_url=None):
         undeleted = True
     if undeleted:
         message.save()
-        messages.success(request, _(u"Message successfully recovered."))
+        messages.success(request, _("Message successfully recovered."))
         return HttpResponseRedirect(success_url)
     raise Http404
 

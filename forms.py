@@ -29,7 +29,7 @@ class PlayerMultipleChoiceField(forms.ModelMultipleChoiceField):
 			return super(PlayerMultipleChoiceField, self).label_from_instance(obj)
 		else:
 			if obj.is_excommunicated:
-				label = ' '.join([label, unicode(_("(excommunicated)"))])
+				label = ' '.join([label, str(_("(excommunicated)"))])
 			return label
 
 def letter_form_factory(sender_player, recipient_player):
