@@ -21,7 +21,6 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import Http404, HttpResponseRedirect
-from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
@@ -158,8 +157,7 @@ def compose(request, sender_id=None, recipient_id=None, letter_id=None):
 					})
 
 	return render_to_response('condottieri_messages/compose.html',
-							context,
-							context_instance=RequestContext(request))
+							context)
 
 @login_required
 def view(request, message_id):
@@ -185,8 +183,7 @@ def view(request, message_id):
 		message.save()
 	context.update({'message' : message,})
 	return render_to_response('condottieri_messages/view.html', 
-							context,
-							context_instance=RequestContext(request))
+							context)
 
 class BoxListView(LoginRequiredMixin, ListView):
 	allow_empty = True
