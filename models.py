@@ -32,8 +32,8 @@ else:
 class Letter(messages.Message):
         """ Letter is just a django-messages Message that adds two fields: sender_player and
         recipient_player. """
-        sender_player = models.ForeignKey(Player, related_name='sent_messages', verbose_name=_("From country"))
-        recipient_player = models.ForeignKey(Player, related_name='received_messages', verbose_name=_("To country"))
+        sender_player = models.ForeignKey(Player, related_name='sent_messages', verbose_name=_("From country"), on_delete=models.CASCADE)
+        recipient_player = models.ForeignKey(Player, related_name='received_messages', verbose_name=_("To country"), on_delete=models.CASCADE)
         year = models.PositiveIntegerField(default=0)
         season = models.PositiveIntegerField(default=1, choices=SEASONS)
     
