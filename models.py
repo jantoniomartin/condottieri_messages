@@ -18,6 +18,7 @@
 
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from django_messages import models as messages
@@ -46,8 +47,7 @@ class Letter(messages.Message):
                 super(Letter, self).save(*args, **kwargs)
         
         def get_absolute_url(self):
-                return ('condottieri_messages_detail', [self.id])
-        get_absolute_url = models.permalink(get_absolute_url)
+                return reverse('condottieri_messages_detail', [self.id])
 
 def notify_new_letter(sender, instance, created, raw, **kw):
     if notification and isinstance(instance, Letter) and created and not raw:
